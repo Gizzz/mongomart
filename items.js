@@ -29,8 +29,8 @@ function ItemDAO(database) {
 			.aggregate([
 				{
 					"$group": {
-						"_id": { "category": "$category" },
-						"count": { "$sum": 1 }
+						"_id": "$category",
+						"num": { "$sum": 1 }
 					}
 				},
 				{
@@ -39,23 +39,16 @@ function ItemDAO(database) {
 			])
 			.toArray()
 			.then((groupsByCategory) => {
-				const mappedGroups = groupsByCategory.map((group) => {
-					return {
-						_id: group._id.category,
-						num: group.count,
-					};
-				});
-
-				const overallCount = groupsByCategory.reduce((prev, next) => {
-					return prev + next.count;
+				const overallItemsCount = groupsByCategory.reduce((prev, next) => {
+					return prev + next.num;
 				}, 0);
 
 				const allItems_group = {
 					_id: "All",
-					num: overallCount,
+					num: overallItemsCount,
 				};
 
-				const allGroups = [allItems_group].concat(mappedGroups);
+				const allGroups = [allItems_group].concat(groupsByCategory);
 				callback(allGroups);
 			})
 			.catch((err) => {
