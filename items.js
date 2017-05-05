@@ -57,7 +57,7 @@ function ItemDAO(database) {
 
 
 	this.getItems = function (category, page, itemsPerPage, callback) {
-		let query = category === "All" ? {} : { category };
+		const query = category === "All" ? {} : { category };
 
 		this.db.collection("item")
 			.find(query)
@@ -74,7 +74,7 @@ function ItemDAO(database) {
 
 
 	this.getNumItems = function (category, callback) {
-		let query = category === "All" ? {} : { category };
+		const query = category === "All" ? {} : { category };
 
 		this.db.collection("item")
 			.find(query)
