@@ -241,7 +241,7 @@ MongoClient.connect('mongodb://localhost:27017/mongomart', function(err, db) {
             
                 });
             } else {
-                cart.updateQuantity(userId, itemId, item.quantity+1, function(userCart) {
+                cart.updateQuantity(userId, itemId, item.quantity + 1, function(userCart) {
                     renderCart(userCart);
                 });
             }
